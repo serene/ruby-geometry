@@ -76,7 +76,35 @@ module Geometry
 
     def to_vector
       Vector.new(point2.x - point1.x, point2.y - point1.y)
-    end        
+    end
+
+    def parallel_lines(distance)
+      dx = point1.x - point2.x
+      dy = point1.y - point2.y
+
+      dist = Math.sqrt(dx*dx + dy*dy).to_f
+      dx /= dist
+      dy /= dist
+
+      x1 = point1.x + (distance*dy)
+      y1 = point1.y - (distance*dx)
+
+      x2 = point2.x + (distance*dy)
+      y2 = point2.y - (distance*dx)
+
+      x3 = point1.x - (distance*dy)
+      y3 = point1.y + (distance*dx)
+
+      x4 = point2.x - (distance*dy)
+      y4 = point2.y + (distance*dx)
+
+      parallels = []
+
+      parallels << Segment.new_by_arrays([x1, y1], [x2, y2])
+      parallels << Segment.new_by_arrays([x3, y3], [x4, y4])
+
+      parallels
+    end
 
   protected
 
